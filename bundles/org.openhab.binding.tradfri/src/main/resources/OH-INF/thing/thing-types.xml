@@ -207,7 +207,7 @@
 		<label>Fan Speed Mode</label>
 		<description>Controls the configured fan speed.</description>
 
-		<command>
+		<state pattern="%d">
 			<options>
 				<option value="0">Power Off</option>
 				<option value="1">Automatic</option>
@@ -217,7 +217,7 @@
 				<option value="40">Speed 4</option>
 				<option value="50">Speed 5</option>
 			</options>
-		</command>
+		</state>
 	</channel-type>
 
 	<channel-type id="fan-speed">

@@ -18,9 +18,10 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.tradfri.internal.TradfriCoapClient;
 import org.openhab.binding.tradfri.internal.model.TradfriAirPurifierData;
 import org.openhab.core.library.types.DecimalType;
-import org.openhab.core.library.types.StringType;
+import org.openhab.core.library.types.QuantityType;
 import org.openhab.core.thing.ChannelUID;
 import org.openhab.core.thing.Thing;
+import org.openhab.core.thing.ThingStatus;
 import org.openhab.core.types.Command;
 import org.openhab.core.types.RefreshType;
 import org.slf4j.Logger;
@@ -69,11 +70,12 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
     private void handleFanModeCommand(Command command) {
         if (command instanceof DecimalType) {
             set(new TradfriAirPurifierData().setFanMode((DecimalType) command).getJsonString());
-        } else if (command instanceof StringType) {
-            DecimalType decimalCommand = DecimalType.valueOf(((StringType) command).toFullString());
+        } else if (command instanceof QuantityType) {
+            DecimalType decimalCommand = new DecimalType(((QuantityType<?>) command));
             set(new TradfriAirPurifierData().setFanMode(decimalCommand).getJsonString());
         } else {
-            logger.debug("Cannot handle command '{}' for channel '{}'", command, CHANNEL_POSITION);
+            logger.debug("Cannot handle command '{}' of type {} for channel '{}'", command, command.getClass(),
+                    CHANNEL_FAN_MODE);
         }
     }
 
@@ -81,6 +83,7 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
     public void onUpdate(JsonElement data) {
         if (active && !(data.isJsonNull())) {
             TradfriAirPurifierData state = new TradfriAirPurifierData(data);
+            updateStatus(state.getReachabilityStatus() ? ThingStatus.ONLINE : ThingStatus.OFFLINE);
 
             DecimalType fanMode = state.getFanMode();
             if (fanMode != null) {
