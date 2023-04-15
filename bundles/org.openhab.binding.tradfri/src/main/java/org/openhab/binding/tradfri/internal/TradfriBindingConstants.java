@@ -220,6 +220,15 @@ public class TradfriBindingConstants {
     public static final String DEVICE_BATTERY_LEVEL = "9";
 
     // List of Air Purifier Constants
+    public static final int FAN_MODE_OFF = 0;
+    public static final int FAN_MODE_AUTO = 1;
+    public static final int FAN_MODE_SPEED1 = 10;
+    public static final int FAN_MODE_SPEED2 = 20;
+    public static final int FAN_MODE_SPEED3 = 30;
+    public static final int FAN_MODE_SPEED4 = 40;
+    public static final int FAN_MODE_SPEED5 = 50;
+
     public static final Set<Integer> AIR_PURIFIER_FANMODE = Collections
-            .unmodifiableSet(Stream.of(0, 1, 10, 20, 30, 40, 50).collect(Collectors.toSet()));
+            .unmodifiableSet(Stream.of(FAN_MODE_OFF, FAN_MODE_AUTO, FAN_MODE_SPEED1, FAN_MODE_SPEED2, FAN_MODE_SPEED3,
+                    FAN_MODE_SPEED4, FAN_MODE_SPEED5).collect(Collectors.toSet()));
 }

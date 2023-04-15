@@ -92,6 +92,8 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 updateState(CHANNEL_FAN_SPEED, fanSpeed);
             }
 
+            logger.debug("json: {}", data);
+
             logger.debug(
                     "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
                     state.getDeviceId(), state.getFanMode(), state.getFanSpeed(), state.getFirmwareVersion(),

@@ -182,7 +182,7 @@
 		</supported-bridge-type-refs>
 
 		<label>Air Purifier device</label>
-		<description>This represents the air purifier sensor and control.</description>
+		<description>This represents the air purifier sensors and controls.</description>
 
 		<channels>
 			<channel id="fan_speed" typeId="fan-speed"/>
@@ -202,33 +202,29 @@
 	</channel-type>
 
 	<channel-type id="fan-mode">
-		<item-type>String</item-type>
+		<item-type>Number:Dimensionless</item-type>
 
 		<label>Fan Speed Mode</label>
 		<description>Controls the configured fan speed.</description>
 
-		<state>
+		<command>
 			<options>
 				<option value="0">Power Off</option>
 				<option value="1">Automatic</option>
-				<option value="10">Level 1</option>
-				<option value="20">Level 2</option>
-				<option value="30">Level 3</option>
-				<option value="40">Level 4</option>
-				<option value="50">Level 5</option>
+				<option value="10">Speed 1</option>
+				<option value="20">Speed 2</option>
+				<option value="30">Speed 3</option>
+				<option value="40">Speed 4</option>
+				<option value="50">Speed 5</option>
 			</options>
-		</state>
-
-		<category>fan</category>
+		</command>
 	</channel-type>
 
 	<channel-type id="fan-speed">
 		<item-type>Number:Dimensionless</item-type>
 
 		<label>Current Fan Speed</label>
-		<description>Displays the current fan speed.</description>
-
-		<category>fan</category>
+		<description>Displays the current fan speed (0..50).</description>
 
 		<state readOnly="true"/>
 	</channel-type>
