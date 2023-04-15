@@ -1,6 +1,7 @@
 # TRÅDFRI Binding
 
 This binding integrates the IKEA TRÅDFRI gateway and devices connected to it (such as dimmable LED bulbs).
+This binding only supports IKEA TRÅDFRI gateway v1.
 
 ## Supported Things
 
@@ -22,13 +23,12 @@ These are:
 | Non-Colour Controller           | 0x0820           | 0820       |
 | Non-Colour Scene Controller     | 0x0830           | 0830       |
 | Control Outlet                  | 0x0010           | 0010       |
-| Window Covering Device          | 0x0202           | 0202       |
-| Window Covering Controller      | 0x0202           | 0203       |
 
 The following matrix lists the capabilities (channels) for each of the supported lighting device types:
 
 | Thing type  | Brightness | Color | Color Temperature | Battery Level | Battery Low | Power | Position |
 |-------------|:----------:|:-----:|:-----------------:|:-------------:|:-----------:|:-----:|:---------|
+|  0007       |            |       |                   |               |             |       |          |
 |  0010       |            |       |                   |               |             |   X   |          |
 |  0100       |     X      |       |                   |               |             |       |          |
 |  0220       |     X      |       |         X         |               |             |       |          |
@@ -38,6 +38,22 @@ The following matrix lists the capabilities (channels) for each of the supported
 |  0830       |            |       |                   |       X       |      X      |       |          |
 |  0202       |            |       |                   |       X       |      X      |       |     X    |
 |  0203       |            |       |                   |       X       |      X      |       |          |
+
+The following things are also supported even thought they are not standardized in Zigbee Light Link:
+
+| Device type                     | Zigbee Device ID | Thing type |
+|---------------------------------|------------------|------------|
+| Window Covering Device          | 0x0202           | 0202       |
+| Window Covering Controller      | 0x0203           | 0203       |
+| Air Purifier                    | 0x0007           | 0007       |
+
+The following matrix lists the capabilities (channels) for each of the supported non-lighting device types:
+
+| Thing type  | Battery Level | Battery Low | Position | Fan Mode | Lock physical buttons | LED's on/off | Air Quality (PM2.5) | Current Fan Speed | Filter check |
+|-------------|:-------------:|:-----------:|:---------|:---------|:----------------------|:-------------|:--------------------|:------------------|:-------------|
+|  0202       |       X       |      X      |     X    |          |                       |              |                     |                   |              |
+|  0203       |       X       |      X      |          |          |                       |              |                     |                   |              |
+|  0007       |               |             |          |    X     |                       |              |                     |         X         |              |
 
 ## Thing Configuration
 
@@ -65,17 +81,21 @@ The control outlet supports the `power` channel.
 
 A blind or curtain supports, beside `battery_level` and `battery_low` channels,  a `positon` channel.
 
+An air purifier supports a `fan_mode` and a `fan_speed` channel.
+
 Refer to the matrix above.
 
-| Channel Type ID   | Item Type     | Description                                            |
-|-------------------|---------------|--------------------------------------------------------|
-| brightness        | Dimmer        | The brightness of the bulb in percent                  |
-| color_temperature | Dimmer        | color temperature from 0% = cold to 100% = warm        |
-| color             | Color         | full color                                             |
-| battery_level     | Number        | battery level (in %)                                   |
-| battery_low       | Switch        | battery low warning (<=10% = ON, >10% = OFF)           |
-| power             | Switch        | power switch                                           |
-| position          | Rollershutter | position of the blinds from 0% = open to 100% = closed |
+| Channel Type ID   | Item Type     | Description                                                                              |
+|:------------------|:--------------|:-----------------------------------------------------------------------------------------|
+| brightness        | Dimmer        | The brightness of the bulb in percent                                                    |
+| color_temperature | Dimmer        | color temperature from 0% = cold to 100% = warm                                          |
+| color             | Color         | full color                                                                               |
+| battery_level     | Number        | battery level (in %)                                                                     |
+| battery_low       | Switch        | battery low warning (<=10% = ON, >10% = OFF)                                             |
+| power             | Switch        | power switch                                                                             |
+| position          | Rollershutter | position of the blinds from 0% = open to 100% = closed                                   |
+| fan_mode          | String        | Fan Mode, one of ('PowerOff', 'Auto', 'Level1', 'Level2', 'Level3', 'Level4', 'Level5')  |
+| fan_speed         | Number        | Current Fan Speed between 0 (off) and 50 (maximum speed)                                 |
 
 ## Full Example
 
@@ -89,6 +109,7 @@ Bridge tradfri:gateway:mygateway [ host="192.168.0.177", code="EHPW5rIJKyXFgjH3"
     0830 myRemoteControl "My Remote Control" [ id=65545 ]
     0010 myControlOutlet "My Control Outlet" [ id=65542 ]
     0202 myBlinds "My Blinds" [ id=65547 ]
+    0007 myAirPurifier "My Air Purifier" [ id=65548 ]
 }
 ```
 

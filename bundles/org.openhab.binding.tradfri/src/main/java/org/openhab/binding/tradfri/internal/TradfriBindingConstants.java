@@ -27,6 +27,7 @@ import org.openhab.core.thing.ThingTypeUID;
  * @author Kai Kreuzer - Initial contribution
  * @author Christoph Weitkamp - Added support for remote controller and motion sensor devices (read-only battery level)
  * @author Manuel Raffel - Added support for blinds
+ * @author Vivien Boistuaud - Added support for air purifier
  */
 @NonNullByDefault
 public class TradfriBindingConstants {
@@ -45,6 +46,7 @@ public class TradfriBindingConstants {
     public static final ThingTypeUID THING_TYPE_MOTION_SENSOR = new ThingTypeUID(BINDING_ID, "0107");
     public static final ThingTypeUID THING_TYPE_BLINDS = new ThingTypeUID(BINDING_ID, "0202");
     public static final ThingTypeUID THING_TYPE_OPEN_CLOSE_REMOTE_CONTROL = new ThingTypeUID(BINDING_ID, "0203");
+    public static final ThingTypeUID THING_TYPE_AIR_PURIFIER = new ThingTypeUID(BINDING_ID, "0007");
 
     public static final Set<ThingTypeUID> SUPPORTED_LIGHT_TYPES_UIDS = Collections
             .unmodifiableSet(Stream.of(THING_TYPE_DIMMABLE_LIGHT, THING_TYPE_COLOR_TEMP_LIGHT, THING_TYPE_COLOR_LIGHT)
@@ -53,6 +55,9 @@ public class TradfriBindingConstants {
     public static final Set<ThingTypeUID> SUPPORTED_PLUG_TYPES_UIDS = Collections.singleton(THING_TYPE_ONOFF_PLUG);
 
     public static final Set<ThingTypeUID> SUPPORTED_BLINDS_TYPES_UIDS = Collections.singleton(THING_TYPE_BLINDS);
+
+    public static final Set<ThingTypeUID> SUPPORTED_AIR_PURIFIER_TYPES_UIDS = Collections
+            .singleton(THING_TYPE_AIR_PURIFIER);
 
     // List of all Gateway Configuration Properties
     public static final String GATEWAY_CONFIG_HOST = "host";
@@ -70,7 +75,8 @@ public class TradfriBindingConstants {
 
     public static final Set<ThingTypeUID> SUPPORTED_DEVICE_TYPES_UIDS = Collections.unmodifiableSet(Stream
             .of(SUPPORTED_LIGHT_TYPES_UIDS.stream(), SUPPORTED_CONTROLLER_TYPES_UIDS.stream(),
-                    SUPPORTED_PLUG_TYPES_UIDS.stream(), SUPPORTED_BLINDS_TYPES_UIDS.stream())
+                    SUPPORTED_PLUG_TYPES_UIDS.stream(), SUPPORTED_BLINDS_TYPES_UIDS.stream(),
+                    SUPPORTED_AIR_PURIFIER_TYPES_UIDS.stream())
             .reduce(Stream::concat).orElseGet(Stream::empty).collect(Collectors.toSet()));
 
     public static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections
@@ -85,9 +91,12 @@ public class TradfriBindingConstants {
     public static final String CHANNEL_POSITION = "position";
     public static final String CHANNEL_BATTERY_LEVEL = "battery_level";
     public static final String CHANNEL_BATTERY_LOW = "battery_low";
+    public static final String CHANNEL_FAN_MODE = "fan_mode";
+    public static final String CHANNEL_FAN_SPEED = "fan_speed";
 
     // IPSO Objects
     public static final String DEVICES = "15001";
+    public static final String AIR_PURIFIER = "15025";
     public static final String AUTH_PATH = "9063";
     public static final String BLINDS = "15015";
     public static final String CLIENT_IDENTITY_PROPOSED = "9090";
@@ -107,6 +116,8 @@ public class TradfriBindingConstants {
     public static final String END_TIME_HR = "9048";
     public static final String END_TIME_MN = "9049";
     public static final String ERROR_TAG = "errorcode";
+    public static final String FAN_MODE = "5900";
+    public static final String FAN_SPEED = "5908";
     public static final String FORCE_CHECK_OTA_UPDATE = "9032";
     public static final String GATEWAY = "15011";
     public static final String GATEWAY_DETAILS = "15012";
@@ -201,8 +212,14 @@ public class TradfriBindingConstants {
     public static final String TYPE_SENSOR = "4";
     public static final String TYPE_REPEATER = "6";
     public static final String TYPE_BLINDS = "7";
+    public static final String TYPE_AIR_PURIFIER = "10";
+
     public static final String DEVICE_VENDOR = "0";
     public static final String DEVICE_MODEL = "1";
     public static final String DEVICE_FIRMWARE = "3";
     public static final String DEVICE_BATTERY_LEVEL = "9";
+
+    // List of Air Purifier Constants
+    public static final Set<Integer> AIR_PURIFIER_FANMODE = Collections
+            .unmodifiableSet(Stream.of(0, 1, 10, 20, 30, 40, 50).collect(Collectors.toSet()));
 }
