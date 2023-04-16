@@ -95,10 +95,13 @@ public class TradfriBindingConstants {
     public static final String CHANNEL_FAN_SPEED = "fan_speed";
     public static final String CHANNEL_DISABLE_LED = "disable_led";
     public static final String CHANNEL_LOCK_BUTTON = "lock_button";
+    public static final String CHANNEL_AIR_QUALITY_PM25 = "air_quality_pm25";
+    public static final String CHANNEL_AIR_QUALITY_RATING = "air_quality_rating";
 
     // IPSO Objects
     public static final String DEVICES = "15001";
     public static final String AIR_PURIFIER = "15025";
+    public static final String AIR_QUALITY = "5907";
     public static final String AUTH_PATH = "9063";
     public static final String BLINDS = "15015";
     public static final String CLIENT_IDENTITY_PROPOSED = "9090";
@@ -235,4 +238,9 @@ public class TradfriBindingConstants {
     public static final Set<Integer> AIR_PURIFIER_FANMODE = Collections
             .unmodifiableSet(Stream.of(FAN_MODE_OFF, FAN_MODE_AUTO, FAN_MODE_SPEED1, FAN_MODE_SPEED2, FAN_MODE_SPEED3,
                     FAN_MODE_SPEED4, FAN_MODE_SPEED5).collect(Collectors.toSet()));
+
+    public static final int AIR_PURIFIER_AIR_QUALITY_OK = 36;
+    public static final int AIR_PURIFIER_AIR_QUALITY_BAD = 86;
+
+    public static final int AIR_PURIFIER_AIR_QUALITY_UNDEFINED = 65535;
 }

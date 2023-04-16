@@ -25,6 +25,7 @@ import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
 import org.openhab.core.types.Command;
 import org.openhab.core.types.RefreshType;
+import org.openhab.core.types.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -129,6 +130,16 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
             OnOffType lockPhysicalButton = state.getLockPhysicalButton();
             if (lockPhysicalButton != null) {
                 updateState(CHANNEL_LOCK_BUTTON, lockPhysicalButton);
+            }
+
+            State airQualityPm25 = state.getAirQualityPM25();
+            if (airQualityPm25 != null) {
+                updateState(CHANNEL_AIR_QUALITY_PM25, airQualityPm25);
+            }
+
+            State airQualityRating = state.getAirQualityRating();
+            if (airQualityRating != null) {
+                updateState(CHANNEL_AIR_QUALITY_RATING, airQualityRating);
             }
 
             logger.debug(

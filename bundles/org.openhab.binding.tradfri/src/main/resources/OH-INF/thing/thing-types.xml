@@ -189,6 +189,8 @@
 			<channel id="fan_mode" typeId="fan-mode"/>
 			<channel id="disable_led" typeId="disable-led"/>
 			<channel id="lock_button" typeId="lock-button"/>
+			<channel id="air_quality_pm25" typeId="air-quality-pm25"/>
+			<channel id="air_quality_rating" typeId="air-quality-rating"/>
 		</channels>
 
 		<representation-property>id</representation-property>
@@ -243,6 +245,30 @@
 
 		<label>Lock Physical Button</label>
 		<description>When ON, locks the physical button on the device.</description>
+	</channel-type>
+
+	<channel-type id="air-quality-pm25">
+		<item-type>Number:Dimensionless</item-type>
+
+		<label>PM 2.5</label>
+		<description>Density of Particulate Matter of 2.5μm measured by the Air Purifier, in ppm.</description>
+
+		<state readOnly="true" pattern="%d ppm"/>
+	</channel-type>
+
+	<channel-type id="air-quality-rating">
+		<item-type>Number:Dimensionless</item-type>
+
+		<label>Air Quality</label>
+		<description>An evaluation of the Air Quality between 1 (Good) and 3 (Bad).</description>
+
+		<state readOnly="true" pattern="%d">
+			<options>
+				<option value="1">Good</option>
+				<option value="2">OK</option>
+				<option value="3">Bad</option>
+			</options>
+		</state>
 	</channel-type>
 
 </thing:thing-descriptions>

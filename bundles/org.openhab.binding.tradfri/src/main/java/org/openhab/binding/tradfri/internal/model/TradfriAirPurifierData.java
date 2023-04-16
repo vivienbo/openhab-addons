@@ -18,6 +18,9 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.library.types.OnOffType;
+import org.openhab.core.library.types.QuantityType;
+import org.openhab.core.types.State;
+import org.openhab.core.types.UnDefType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,5 +111,40 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
     public TradfriAirPurifierData setLockPhysicalButton(OnOffType lockPhysicalButton) {
         attributes.add(LOCK_PHYSICAL_BUTTON, new JsonPrimitive(OnOffType.ON.equals(lockPhysicalButton) ? 1 : 0));
         return this;
+    }
+
+    public @Nullable State getAirQualityPM25() {
+        JsonElement airQuality = attributes.get(AIR_QUALITY);
+        if (airQuality != null) {
+            int pm25InPpm = airQuality.getAsInt();
+            if (pm25InPpm != AIR_PURIFIER_AIR_QUALITY_UNDEFINED) {
+                return new QuantityType<>(airQuality.getAsString() + " ppm");
+            } else {
+                return UnDefType.UNDEF;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    public @Nullable State getAirQualityRating() {
+        State pm25State = getAirQualityPM25();
+        if (pm25State != null) {
+            if (pm25State instanceof QuantityType<?>) {
+                int pm25Value = ((QuantityType<?>) pm25State).intValue();
+                int qualityRating = 1;
+
+                if (pm25Value >= AIR_PURIFIER_AIR_QUALITY_BAD) {
+                    qualityRating = 3;
+                } else if (pm25Value >= AIR_PURIFIER_AIR_QUALITY_OK) {
+                    qualityRating = 2;
+                }
+
+                return new DecimalType(qualityRating);
+            }
+            return UnDefType.UNDEF;
+        } else {
+            return null;
+        }
     }
 }
