@@ -17,6 +17,7 @@ import static org.openhab.binding.tradfri.internal.TradfriBindingConstants.*;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.library.types.DecimalType;
+import org.openhab.core.library.types.OnOffType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,5 +78,20 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
         } else {
             return null;
         }
+    }
+
+    public @Nullable OnOffType getDisableLed() {
+        JsonElement ledOnOff = attributes.get(LED_DISABLE);
+        if (ledOnOff != null) {
+            boolean ledStatus = ledOnOff.getAsInt() != 0;
+            return OnOffType.from(ledStatus);
+        } else {
+            return null;
+        }
+    }
+
+    public TradfriAirPurifierData setDisableLed(OnOffType disableOnOff) {
+        attributes.add(LED_DISABLE, new JsonPrimitive(OnOffType.ON.equals(disableOnOff) ? 1 : 0));
+        return this;
     }
 }

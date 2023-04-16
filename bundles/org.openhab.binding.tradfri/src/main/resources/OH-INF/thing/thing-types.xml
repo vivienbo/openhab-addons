@@ -187,6 +187,7 @@
 		<channels>
 			<channel id="fan_speed" typeId="fan-speed"/>
 			<channel id="fan_mode" typeId="fan-mode"/>
+			<channel id="disable_led" typeId="disable-led"/>
 		</channels>
 
 		<representation-property>id</representation-property>
@@ -228,5 +229,13 @@
 
 		<state readOnly="true"/>
 	</channel-type>
+
+	<channel-type id="disable-led">
+		<item-type>Switch</item-type>
+
+		<label>Disable LED</label>
+		<description>Disables the LED's on the Air Purifier.</description>
+	</channel-type>
+
 
 </thing:thing-descriptions>

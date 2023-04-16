@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.tradfri.internal.TradfriCoapClient;
 import org.openhab.binding.tradfri.internal.model.TradfriAirPurifierData;
 import org.openhab.core.library.types.DecimalType;
+import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.library.types.QuantityType;
 import org.openhab.core.thing.ChannelUID;
 import org.openhab.core.thing.Thing;
@@ -61,6 +62,10 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
             switch (channelUID.getId()) {
                 case CHANNEL_FAN_MODE:
                     handleFanModeCommand(command);
+                    break;
+                case CHANNEL_DISABLE_LED:
+                    handleDisableLed(command);
+                    break;
                 default:
                     logger.error("Unknown channel UID {}", channelUID);
             }
@@ -76,6 +81,15 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
         } else {
             logger.debug("Cannot handle command '{}' of type {} for channel '{}'", command, command.getClass(),
                     CHANNEL_FAN_MODE);
+        }
+    }
+
+    private void handleDisableLed(Command command) {
+        if (command instanceof OnOffType) {
+            set(new TradfriAirPurifierData().setDisableLed((OnOffType) command).getJsonString());
+        } else {
+            logger.debug("Cannot handle command '{}' of type {} for channel '{}'", command, command.getClass(),
+                    CHANNEL_DISABLE_LED);
         }
     }
 
@@ -95,12 +109,15 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 updateState(CHANNEL_FAN_SPEED, fanSpeed);
             }
 
-            logger.debug("json: {}", data);
+            OnOffType disableLed = state.getDisableLed();
+            if (disableLed != null) {
+                updateState(CHANNEL_DISABLE_LED, disableLed);
+            }
 
             logger.debug(
-                    "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
-                    state.getDeviceId(), state.getFanMode(), state.getFanSpeed(), state.getFirmwareVersion(),
-                    state.getModelId(), state.getVendor());
+                    "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, disableLed: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
+                    state.getDeviceId(), state.getFanMode(), state.getFanSpeed(), state.getDisableLed(),
+                    state.getFirmwareVersion(), state.getModelId(), state.getVendor());
         }
     }
 }

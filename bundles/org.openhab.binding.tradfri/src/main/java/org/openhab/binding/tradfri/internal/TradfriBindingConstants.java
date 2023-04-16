@@ -93,6 +93,7 @@ public class TradfriBindingConstants {
     public static final String CHANNEL_BATTERY_LOW = "battery_low";
     public static final String CHANNEL_FAN_MODE = "fan_mode";
     public static final String CHANNEL_FAN_SPEED = "fan_speed";
+    public static final String CHANNEL_DISABLE_LED = "disable_led";
 
     // IPSO Objects
     public static final String DEVICES = "15001";
@@ -136,6 +137,7 @@ public class TradfriBindingConstants {
     public static final String IKEA_MOODS = "9068";
     public static final String INSTANCE_ID = "9003";
     public static final String LAST_SEEN = "9020";
+    public static final String LED_DISABLE = "5906";
     public static final String LIGHT = "3311";
     public static final int LIGHTS_OFF_SMART_TASK = 2;
     public static final String LIGHT_SETTING = "15013";
