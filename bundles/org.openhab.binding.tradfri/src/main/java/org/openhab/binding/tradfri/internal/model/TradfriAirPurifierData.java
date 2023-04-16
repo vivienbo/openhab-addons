@@ -169,4 +169,14 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
             return null;
         }
     }
+
+    public @Nullable QuantityType<Time> getFilterUptime() {
+        JsonElement filterUptime = attributes.get(FILTER_UPTIME);
+        if (filterUptime != null) {
+            String filterUptimeMinutes = filterUptime.getAsString();
+            return new QuantityType<>(filterUptimeMinutes + " min");
+        } else {
+            return null;
+        }
+    }
 }

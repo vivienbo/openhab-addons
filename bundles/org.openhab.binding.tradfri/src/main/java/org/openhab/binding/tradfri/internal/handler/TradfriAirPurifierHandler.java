@@ -152,12 +152,17 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 updateState(CHANNEL_FILTER_CHECK_ALARM, filterCheckAlarm);
             }
 
+            State filterUptime = state.getFilterUptime();
+            if (filterUptime != null) {
+                updateState(CHANNEL_FILTER_UPTIME, filterUptime);
+            }
+
             logger.debug(
-                    "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, disableLed: {}, lockButton: {}, airQualityPm25: {}, airQualityRating: {}, nextFilterCheckTTL: {}, filterCheckAlarm: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
+                    "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, disableLed: {}, lockButton: {}, airQualityPm25: {}, airQualityRating: {}, nextFilterCheckTTL: {}, filterCheckAlarm: {}, filterUptime: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
                     state.getDeviceId(), state.getFanMode(), state.getFanSpeed(), state.getDisableLed(),
                     state.getLockPhysicalButton(), state.getAirQualityPM25(), state.getAirQualityRating(),
-                    state.getNextFilterCheckTTL(), state.getFilterCheckAlarm(), state.getFirmwareVersion(),
-                    state.getModelId(), state.getVendor());
+                    state.getNextFilterCheckTTL(), state.getFilterCheckAlarm(), state.getFilterUptime(),
+                    state.getFirmwareVersion(), state.getModelId(), state.getVendor());
         }
     }
 }

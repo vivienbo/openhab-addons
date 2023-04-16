@@ -49,11 +49,11 @@ The following things are also supported even thought they are not standardized i
 
 The following matrix lists the capabilities (channels) for each of the supported non-lighting device types:
 
-| Thing type  | Battery Level | Battery Low | Position | Fan Mode | Lock physical buttons | LED's on/off | Air Quality | Current Fan Speed | Filter check |
-|-------------|:-------------:|:-----------:|:---------|:---------|:----------------------|:-------------|:------------|:------------------|:-------------|
-|  0202       |       X       |      X      |     X    |          |                       |              |             |                   |              |
-|  0203       |       X       |      X      |          |          |                       |              |             |                   |              |
-|  0007       |               |             |          |    X     |          X            |      X       |      X      |         X         |              |
+| Thing type  | Battery Level | Battery Low | Position | Fan Mode | Lock physical buttons | LED's on/off | Air Quality | Current Fan Speed | Filter status |
+|-------------|:-------------:|:-----------:|:---------|:---------|:----------------------|:-------------|:------------|:------------------|:--------------|
+|  0202       |       X       |      X      |     X    |          |                       |              |             |                   |               |
+|  0203       |       X       |      X      |          |          |                       |              |             |                   |               |
+|  0007       |               |             |          |    X     |          X            |      X       |      X      |         X         |       X       |
 
 ## Thing Configuration
 
@@ -86,6 +86,7 @@ An air purifier supports:
 * a `disable_led` and `lock_button`, to disabled the LED's or lock the button on the physical device.
 * a `air_quality_pm25` and `air_quality_rating`, which reads the particulate matter 2.5μm and corresponding indication of air quality.
 * a `filter_check_next` and `filter_check_alarm`, which represents the remaining number of minutes until next filter check and whether it is time to do the filter check now. Filter check must be completed through the TRÅDFRI app.
+* a `filter_uptime`, which represents the current time since last filter change.
 
 Refer to the matrix above.
 
@@ -104,8 +105,9 @@ Refer to the matrix above.
 | lock_button        | Switch         | Disables the physical button on the device (applications can still make changes)         |
 | air_quality_pm25   | Number         | Density of Particulate Matter of 2.5μm, measured in ppm                                  |
 | air_quality_rating | Number         | Gives a rating about air quality (1 = Good, 2 = OK, 3 = Bad) similar to Tradfri app      |
-| filter_check_next  | Number:Time    | Time remaining (if > 0) before the next filter check                                     |
+| filter_check_next  | Number:Time    | Time in min before the next filter check if > 0, if < 0 you are late checking the filter |
 | filter_check_alarm | Switch         | When ON, you must perform a filter check (i.e. `filter_check_next` is < 0)               |
+| filter_uptime      | Number:Time    | Time elapsed since the last filter change, in min                                        |
 
 ## Full Example
 
@@ -142,6 +144,7 @@ Number AirPurifierQualityPM25 { channel="tradfri:0007:mygateway:myAirPurifier:ai
 Number AirPurifierQualityRating { channel="tradfri:0007:mygateway:myAirPurifier:air_quality_rating" }
 Number AirPurifierFilterCheckTTL { channel="tradfri:0007:mygateway:myAirPurifier:filter_check_next" }
 Switch AirPurifierFilterCheckAlarm { channel="tradfri:0007:mygateway:myAirPurifier:filter_check_alarm" }
+Number AirPurifierFilterUptime { channel="tradfri:0007:mygateway:myAirPurifier:filter_uptime" }
 ```
 
 demo.sitemap:
@@ -165,7 +168,8 @@ sitemap demo label="Main Menu"
         Text item=AirPurifierQualityPM25 label="PM2.5"
         Text item=AirPurifierQualityRating label="Air Quality"
         Text item=AirPurifierFilterCheckTTL label="TTL before next filter check [%d min]"
-        Text item=AirPurifierFilterCheckTTL label="Need to Check Filter [%s]"
+        Text item=AirPurifierFilterCheckAlarm label="Need to Check Filter [%s]"
+        Text item=AirPurifierFilterUptime label="Current filter uptime [%d min]"
     }
 }
 ```

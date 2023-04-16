@@ -193,6 +193,7 @@
 			<channel id="air_quality_rating" typeId="air-quality-rating"/>
 			<channel id="filter_check_next" typeId="filter-check-next"/>
 			<channel id="filter_check_alarm" typeId="filter-check-alarm"/>
+			<channel id="filter_uptime" typeId="filter-uptime"/>
 		</channels>
 
 		<representation-property>id</representation-property>
@@ -289,6 +290,15 @@
 		<description>When this value is ON, you need to perform a filter check.</description>
 
 		<state readOnly="true" pattern="%s"/>
+	</channel-type>
+
+	<channel-type id="filter-uptime">
+		<item-type>Number:Time</item-type>
+
+		<label>Filter Uptime</label>
+		<description>The duration for which the current filter was used.</description>
+
+		<state readOnly="true" pattern="%.2f week"/>
 	</channel-type>
 
 </thing:thing-descriptions>

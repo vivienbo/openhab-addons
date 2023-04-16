@@ -99,6 +99,7 @@ public class TradfriBindingConstants {
     public static final String CHANNEL_AIR_QUALITY_RATING = "air_quality_rating";
     public static final String CHANNEL_FILTER_CHECK_NEXT = "filter_check_next";
     public static final String CHANNEL_FILTER_CHECK_ALARM = "filter_check_alarm";
+    public static final String CHANNEL_FILTER_UPTIME = "filter_uptime";
 
     // IPSO Objects
     public static final String DEVICES = "15001";
@@ -125,6 +126,7 @@ public class TradfriBindingConstants {
     public static final String ERROR_TAG = "errorcode";
     public static final String FAN_MODE = "5900";
     public static final String FAN_SPEED = "5908";
+    public static final String FILTER_UPTIME = "5902";
     public static final String FORCE_CHECK_OTA_UPDATE = "9032";
     public static final String GATEWAY = "15011";
     public static final String GATEWAY_DETAILS = "15012";
