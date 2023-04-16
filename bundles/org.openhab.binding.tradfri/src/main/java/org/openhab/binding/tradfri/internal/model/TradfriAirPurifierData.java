@@ -14,6 +14,7 @@ package org.openhab.binding.tradfri.internal.model;
 
 import static org.openhab.binding.tradfri.internal.TradfriBindingConstants.*;
 
+import javax.measure.quantity.Dimensionless;
 import javax.measure.quantity.Time;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
@@ -21,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.library.types.QuantityType;
+import org.openhab.core.library.unit.Units;
 import org.openhab.core.types.State;
 import org.openhab.core.types.UnDefType;
 import org.slf4j.Logger;
@@ -58,6 +60,7 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
             if (AIR_PURIFIER_FANMODE.contains(modeValue)) {
                 return new DecimalType(modeValue);
             } else {
+                logger.debug("Invalid speedMode is '{}': unknown value", modeValue);
                 return null;
             }
         } else {
@@ -65,12 +68,12 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
         }
     }
 
-    public TradfriAirPurifierData setFanMode(DecimalType speedValue) {
+    public TradfriAirPurifierData setFanMode(Number speedValue) {
         int speed = speedValue.intValue();
         if (AIR_PURIFIER_FANMODE.contains(speed)) {
             attributes.add(FAN_MODE, new JsonPrimitive(speed));
         } else {
-            logger.debug("Could not set speedMode to '{}': unknown value", speed);
+            logger.debug("Could not set fanMode to '{}': unknown value", speed);
         }
         return this;
     }
@@ -120,7 +123,7 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
         if (airQuality != null) {
             int pm25InPpm = airQuality.getAsInt();
             if (pm25InPpm != AIR_PURIFIER_AIR_QUALITY_UNDEFINED) {
-                return new QuantityType<>(airQuality.getAsString() + " ppm");
+                return new QuantityType<Dimensionless>(pm25InPpm, Units.PARTS_PER_MILLION);
             } else {
                 return UnDefType.UNDEF;
             }
@@ -132,8 +135,8 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
     public @Nullable State getAirQualityRating() {
         State pm25State = getAirQualityPM25();
         if (pm25State != null) {
-            if (pm25State instanceof QuantityType<?>) {
-                int pm25Value = ((QuantityType<?>) pm25State).intValue();
+            if (pm25State instanceof Number) {
+                int pm25Value = ((Number) pm25State).intValue();
                 int qualityRating = 1;
 
                 if (pm25Value >= AIR_PURIFIER_AIR_QUALITY_BAD) {
@@ -153,8 +156,8 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
     public @Nullable QuantityType<Time> getNextFilterCheckTTL() {
         JsonElement nextFilterCheckTTL = attributes.get(NEXT_FILTER_CHECK);
         if (nextFilterCheckTTL != null) {
-            String remainingMinutes = nextFilterCheckTTL.getAsString();
-            return new QuantityType<>(remainingMinutes + " min");
+            int remainingMinutes = nextFilterCheckTTL.getAsInt();
+            return new QuantityType<Time>(remainingMinutes, Units.MINUTE);
         } else {
             return null;
         }
@@ -173,8 +176,8 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
     public @Nullable QuantityType<Time> getFilterUptime() {
         JsonElement filterUptime = attributes.get(FILTER_UPTIME);
         if (filterUptime != null) {
-            String filterUptimeMinutes = filterUptime.getAsString();
-            return new QuantityType<>(filterUptimeMinutes + " min");
+            int filterUptimeMinutes = filterUptime.getAsInt();
+            return new QuantityType<Time>(filterUptimeMinutes, Units.MINUTE);
         } else {
             return null;
         }

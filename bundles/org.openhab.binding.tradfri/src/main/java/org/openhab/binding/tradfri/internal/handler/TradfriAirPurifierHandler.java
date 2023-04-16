@@ -17,9 +17,7 @@ import static org.openhab.binding.tradfri.internal.TradfriBindingConstants.*;
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.binding.tradfri.internal.TradfriCoapClient;
 import org.openhab.binding.tradfri.internal.model.TradfriAirPurifierData;
-import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.library.types.OnOffType;
-import org.openhab.core.library.types.QuantityType;
 import org.openhab.core.thing.ChannelUID;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
@@ -77,11 +75,8 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
     }
 
     private void handleFanModeCommand(Command command) {
-        if (command instanceof DecimalType) {
-            set(new TradfriAirPurifierData().setFanMode((DecimalType) command).getJsonString());
-        } else if (command instanceof QuantityType) {
-            DecimalType decimalCommand = new DecimalType(((QuantityType<?>) command));
-            set(new TradfriAirPurifierData().setFanMode(decimalCommand).getJsonString());
+        if (command instanceof Number) {
+            set(new TradfriAirPurifierData().setFanMode((Number) command).getJsonString());
         } else {
             logger.debug("Cannot handle command '{}' of type {} for channel '{}'", command, command.getClass(),
                     CHANNEL_FAN_MODE);
@@ -112,22 +107,22 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
             TradfriAirPurifierData state = new TradfriAirPurifierData(data);
             updateStatus(state.getReachabilityStatus() ? ThingStatus.ONLINE : ThingStatus.OFFLINE);
 
-            DecimalType fanMode = state.getFanMode();
+            State fanMode = state.getFanMode();
             if (fanMode != null) {
                 updateState(CHANNEL_FAN_MODE, fanMode);
             }
 
-            DecimalType fanSpeed = state.getFanSpeed();
+            State fanSpeed = state.getFanSpeed();
             if (fanSpeed != null) {
                 updateState(CHANNEL_FAN_SPEED, fanSpeed);
             }
 
-            OnOffType disableLed = state.getDisableLed();
+            State disableLed = state.getDisableLed();
             if (disableLed != null) {
                 updateState(CHANNEL_DISABLE_LED, disableLed);
             }
 
-            OnOffType lockPhysicalButton = state.getLockPhysicalButton();
+            State lockPhysicalButton = state.getLockPhysicalButton();
             if (lockPhysicalButton != null) {
                 updateState(CHANNEL_LOCK_BUTTON, lockPhysicalButton);
             }
@@ -147,7 +142,7 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 updateState(CHANNEL_FILTER_CHECK_NEXT, nextFilterCheckTTL);
             }
 
-            OnOffType filterCheckAlarm = state.getFilterCheckAlarm();
+            State filterCheckAlarm = state.getFilterCheckAlarm();
             if (filterCheckAlarm != null) {
                 updateState(CHANNEL_FILTER_CHECK_ALARM, filterCheckAlarm);
             }
