@@ -53,7 +53,7 @@ The following matrix lists the capabilities (channels) for each of the supported
 |-------------|:-------------:|:-----------:|:---------|:---------|:----------------------|:-------------|:--------------------|:------------------|:-------------|
 |  0202       |       X       |      X      |     X    |          |                       |              |                     |                   |              |
 |  0203       |       X       |      X      |          |          |                       |              |                     |                   |              |
-|  0007       |               |             |          |    X     |                       |              |                     |         X         |              |
+|  0007       |               |             |          |    X     |          X            |      X       |                     |         X         |              |
 
 ## Thing Configuration
 
@@ -81,7 +81,8 @@ The control outlet supports the `power` channel.
 
 A blind or curtain supports, beside `battery_level` and `battery_low` channels,  a `positon` channel.
 
-An air purifier supports a `fan_mode` and a `fan_speed` channel.
+An air purifier supports a `fan_mode` and `fan_speed`, which allows for control and reading of the speed. It also has a
+`disable_led` and `lock_button`, to disabled the LED's or lock the button on the physical device.
 
 Refer to the matrix above.
 
@@ -94,8 +95,11 @@ Refer to the matrix above.
 | battery_low       | Switch        | battery low warning (<=10% = ON, >10% = OFF)                                             |
 | power             | Switch        | power switch                                                                             |
 | position          | Rollershutter | position of the blinds from 0% = open to 100% = closed                                   |
-| fan_mode          | String        | Fan Mode, one of ('PowerOff', 'Auto', 'Level1', 'Level2', 'Level3', 'Level4', 'Level5')  |
+| fan_mode          | Number        | Fan Mode, target speed of the fan (0 = off, 1 = auto, 10..50 = Level 1 to 5)             |
 | fan_speed         | Number        | Current Fan Speed between 0 (off) and 50 (maximum speed)                                 |
+| disable_led       | Switch        | Disables the LED's on the device                                                         |
+| lock_button       | Switch        | Disables the physical button on the device (applications can still make changes)         |
+
 
 ## Full Example
 
@@ -124,6 +128,10 @@ Number RemoteControlBatteryLevel { channel="tradfri:0830:mygateway:myRemoteContr
 Switch RemoteControlBatteryLow { channel="tradfri:0830:mygateway:myRemoteControl:battery_low" }
 Switch ControlOutlet { channel="tradfri:0010:mygateway:myControlOutlet:power" }
 Rollershutter BlindPosition { channel="tradfri:0202:mygateway:myBlinds:position" }
+Number AirPurifierFanMode { channel="tradfri:0007:mygateway:myAirPurifier:fan_mode" }
+Number AirPurifierFanSpeed { channel="tradfri:0007:mygateway:myAirPurifier:fan_speed" }
+Switch AirPurifierDisableLED { channel="tradfri:0007:mygateway:myAirPurifier:disable_led" }
+Switch AirPurifierLockPhysicalButton { channel="tradfri:0007:mygateway:myAirPurifier:lock_button" }
 ```
 
 demo.sitemap:
@@ -140,6 +148,10 @@ sitemap demo label="Main Menu"
         Switch item=RemoteControlBatteryLow label="Battery Low Warning"
         Switch item=ControlOutlet label="Power Switch"
         Switch item=BlindPosition label="Blind Position [%d]"
+        Selection item=AirPurifierFanMode label="Fan Mode"
+        Text item=AirPurifierFanSpeed label="Current Fan Speed [%d]"
+        Switch item=AirPurifierDisableLED label="Disable LEDs"
+        Switch item=AirPurifierLockPhysicalButton label="Disable Physical Buttons"
     }
 }
 ```
