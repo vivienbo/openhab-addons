@@ -94,6 +94,7 @@ public class TradfriBindingConstants {
     public static final String CHANNEL_FAN_MODE = "fan_mode";
     public static final String CHANNEL_FAN_SPEED = "fan_speed";
     public static final String CHANNEL_DISABLE_LED = "disable_led";
+    public static final String CHANNEL_LOCK_BUTTON = "lock_button";
 
     // IPSO Objects
     public static final String DEVICES = "15001";
@@ -141,6 +142,7 @@ public class TradfriBindingConstants {
     public static final String LIGHT = "3311";
     public static final int LIGHTS_OFF_SMART_TASK = 2;
     public static final String LIGHT_SETTING = "15013";
+    public static final String LOCK_PHYSICAL_BUTTON = "5905";
     public static final int LOSS_OF_INTERNET_CONNECTIVITY = 5001;
     public static final String MASTER_TOKEN_TAG = "9036";
     public static final String MAX_MSR_VALUE = "5602";

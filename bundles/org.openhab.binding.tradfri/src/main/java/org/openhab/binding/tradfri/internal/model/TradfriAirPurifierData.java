@@ -94,4 +94,19 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
         attributes.add(LED_DISABLE, new JsonPrimitive(OnOffType.ON.equals(disableOnOff) ? 1 : 0));
         return this;
     }
+
+    public @Nullable OnOffType getLockPhysicalButton() {
+        JsonElement lockPhysicalButton = attributes.get(LOCK_PHYSICAL_BUTTON);
+        if (lockPhysicalButton != null) {
+            boolean isLocked = lockPhysicalButton.getAsInt() != 0;
+            return OnOffType.from(isLocked);
+        } else {
+            return null;
+        }
+    }
+
+    public TradfriAirPurifierData setLockPhysicalButton(OnOffType lockPhysicalButton) {
+        attributes.add(LOCK_PHYSICAL_BUTTON, new JsonPrimitive(OnOffType.ON.equals(lockPhysicalButton) ? 1 : 0));
+        return this;
+    }
 }

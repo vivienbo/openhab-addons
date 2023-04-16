@@ -188,6 +188,7 @@
 			<channel id="fan_speed" typeId="fan-speed"/>
 			<channel id="fan_mode" typeId="fan-mode"/>
 			<channel id="disable_led" typeId="disable-led"/>
+			<channel id="lock_button" typeId="lock-button"/>
 		</channels>
 
 		<representation-property>id</representation-property>
@@ -237,5 +238,11 @@
 		<description>Disables the LED's on the Air Purifier.</description>
 	</channel-type>
 
+	<channel-type id="lock-button">
+		<item-type>Switch</item-type>
+
+		<label>Lock Physical Button</label>
+		<description>When ON, locks the physical button on the device.</description>
+	</channel-type>
 
 </thing:thing-descriptions>

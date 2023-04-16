@@ -66,6 +66,9 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 case CHANNEL_DISABLE_LED:
                     handleDisableLed(command);
                     break;
+                case CHANNEL_LOCK_BUTTON:
+                    handleLockButton(command);
+                    break;
                 default:
                     logger.error("Unknown channel UID {}", channelUID);
             }
@@ -93,6 +96,15 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
         }
     }
 
+    private void handleLockButton(Command command) {
+        if (command instanceof OnOffType) {
+            set(new TradfriAirPurifierData().setLockPhysicalButton((OnOffType) command).getJsonString());
+        } else {
+            logger.debug("Cannot handle command '{}' of type {} for channel '{}'", command, command.getClass(),
+                    CHANNEL_DISABLE_LED);
+        }
+    }
+
     @Override
     public void onUpdate(JsonElement data) {
         if (active && !(data.isJsonNull())) {
@@ -114,10 +126,15 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 updateState(CHANNEL_DISABLE_LED, disableLed);
             }
 
+            OnOffType lockPhysicalButton = state.getLockPhysicalButton();
+            if (lockPhysicalButton != null) {
+                updateState(CHANNEL_LOCK_BUTTON, lockPhysicalButton);
+            }
+
             logger.debug(
-                    "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, disableLed: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
+                    "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, disableLed: {}, lockButton: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
                     state.getDeviceId(), state.getFanMode(), state.getFanSpeed(), state.getDisableLed(),
-                    state.getFirmwareVersion(), state.getModelId(), state.getVendor());
+                    state.getLockPhysicalButton(), state.getFirmwareVersion(), state.getModelId(), state.getVendor());
         }
     }
 }
