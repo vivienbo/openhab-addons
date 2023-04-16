@@ -14,6 +14,8 @@ package org.openhab.binding.tradfri.internal.model;
 
 import static org.openhab.binding.tradfri.internal.TradfriBindingConstants.*;
 
+import javax.measure.quantity.Time;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.library.types.DecimalType;
@@ -143,6 +145,26 @@ public class TradfriAirPurifierData extends TradfriDeviceData {
                 return new DecimalType(qualityRating);
             }
             return UnDefType.UNDEF;
+        } else {
+            return null;
+        }
+    }
+
+    public @Nullable QuantityType<Time> getNextFilterCheckTTL() {
+        JsonElement nextFilterCheckTTL = attributes.get(NEXT_FILTER_CHECK);
+        if (nextFilterCheckTTL != null) {
+            String remainingMinutes = nextFilterCheckTTL.getAsString();
+            return new QuantityType<>(remainingMinutes + " min");
+        } else {
+            return null;
+        }
+    }
+
+    public @Nullable OnOffType getFilterCheckAlarm() {
+        QuantityType<Time> ttl = getNextFilterCheckTTL();
+        if (ttl != null) {
+            int ttlValue = ttl.intValue();
+            return ttlValue < 0 ? OnOffType.ON : OnOffType.OFF;
         } else {
             return null;
         }

@@ -97,6 +97,8 @@ public class TradfriBindingConstants {
     public static final String CHANNEL_LOCK_BUTTON = "lock_button";
     public static final String CHANNEL_AIR_QUALITY_PM25 = "air_quality_pm25";
     public static final String CHANNEL_AIR_QUALITY_RATING = "air_quality_rating";
+    public static final String CHANNEL_FILTER_CHECK_NEXT = "filter_check_next";
+    public static final String CHANNEL_FILTER_CHECK_ALARM = "filter_check_alarm";
 
     // IPSO Objects
     public static final String DEVICES = "15001";
@@ -155,6 +157,7 @@ public class TradfriBindingConstants {
     public static final String NAME = "9001";
     public static final int NEW_FIRMWARE_AVAILABLE = 1001;
     public static final String NEW_PSK_BY_GW = "9091";
+    public static final String NEXT_FILTER_CHECK = "5910";
     public static final String NOTIFICATION_EVENT = "9015";
     public static final String NOTIFICATION_NVPAIR = "9017";
     public static final String NOTIFICATION_STATE = "9014";

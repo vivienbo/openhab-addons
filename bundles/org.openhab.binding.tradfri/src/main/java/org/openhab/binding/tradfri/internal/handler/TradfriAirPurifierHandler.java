@@ -142,6 +142,16 @@ public class TradfriAirPurifierHandler extends TradfriThingHandler {
                 updateState(CHANNEL_AIR_QUALITY_RATING, airQualityRating);
             }
 
+            State nextFilterCheckTTL = state.getNextFilterCheckTTL();
+            if (nextFilterCheckTTL != null) {
+                updateState(CHANNEL_FILTER_CHECK_NEXT, nextFilterCheckTTL);
+            }
+
+            OnOffType filterCheckAlarm = state.getFilterCheckAlarm();
+            if (filterCheckAlarm != null) {
+                updateState(CHANNEL_FILTER_CHECK_ALARM, filterCheckAlarm);
+            }
+
             logger.debug(
                     "Updating thing for airPurifierId {} to state {fanMode: {}, fanSpeed: {}, disableLed: {}, lockButton: {}, firmwareVersion: {}, modelId: {}, vendor: {}}",
                     state.getDeviceId(), state.getFanMode(), state.getFanSpeed(), state.getDisableLed(),
