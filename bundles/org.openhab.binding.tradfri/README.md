@@ -28,7 +28,6 @@ The following matrix lists the capabilities (channels) for each of the supported
 
 | Thing type  | Brightness | Color | Color Temperature | Battery Level | Battery Low | Power | Position |
 |-------------|:----------:|:-----:|:-----------------:|:-------------:|:-----------:|:-----:|:---------|
-|  0007       |            |       |                   |               |             |       |          |
 |  0010       |            |       |                   |               |             |   X   |          |
 |  0100       |     X      |       |                   |               |             |       |          |
 |  0220       |     X      |       |         X         |               |             |       |          |
@@ -90,15 +89,15 @@ An air purifier supports:
 
 Refer to the matrix above.
 
-| Channel Type ID    | Item Type      | Description                                                                              |
-|:-------------------|:---------------|:-----------------------------------------------------------------------------------------|
-| brightness         | Dimmer         | The brightness of the bulb in percent                                                    |
-| color_temperature  | Dimmer         | color temperature from 0% = cold to 100% = warm                                          |
-| color              | Color          | full color                                                                               |
-| battery_level      | Number         | battery level (in %)                                                                     |
-| battery_low        | Switch         | battery low warning (<=10% = ON, >10% = OFF)                                             |
-| power              | Switch         | power switch                                                                             |
-| position           | Rollershutter  | position of the blinds from 0% = open to 100% = closed                                   |
+| Channel Type ID   | Item Type     | Description                                            |
+|-------------------|---------------|--------------------------------------------------------|
+| brightness        | Dimmer        | The brightness of the bulb in percent                  |
+| color_temperature | Dimmer        | color temperature from 0% = cold to 100% = warm        |
+| color             | Color         | full color                                             |
+| battery_level     | Number        | battery level (in %)                                   |
+| battery_low       | Switch        | battery low warning (<=10% = ON, >10% = OFF)           |
+| power             | Switch        | power switch                                           |
+| position          | Rollershutter | position of the blinds from 0% = open to 100% = closed |
 | fan_mode           | Number         | Fan Mode, target speed of the fan (0 = off, 1 = auto, 10..50 = Level 1 to 5)             |
 | fan_speed          | Number         | Current Fan Speed between 0 (off) and 50 (maximum speed)                                 |
 | disable_led        | Switch         | Disables the LED's on the device                                                         |
