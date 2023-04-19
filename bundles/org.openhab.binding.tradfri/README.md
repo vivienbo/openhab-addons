@@ -26,17 +26,15 @@ These are:
 
 The following matrix lists the capabilities (channels) for each of the supported lighting device types:
 
-| Thing type  | Brightness | Color | Color Temperature | Battery Level | Battery Low | Power | Position |
-|-------------|:----------:|:-----:|:-----------------:|:-------------:|:-----------:|:-----:|:---------|
-|  0010       |            |       |                   |               |             |   X   |          |
-|  0100       |     X      |       |                   |               |             |       |          |
-|  0220       |     X      |       |         X         |               |             |       |          |
-|  0210       |            |   X   |         X         |               |             |       |          |
-|  0107       |            |       |                   |       X       |      X      |       |          |
-|  0820       |            |       |                   |       X       |      X      |       |          |
-|  0830       |            |       |                   |       X       |      X      |       |          |
-|  0202       |            |       |                   |       X       |      X      |       |     X    |
-|  0203       |            |       |                   |       X       |      X      |       |          |
+| Thing type  | Brightness | Color | Color Temperature | Battery Level | Battery Low | Power |
+|-------------|:----------:|:-----:|:-----------------:|:-------------:|:-----------:|:-----:|
+|  0010       |            |       |                   |               |             |   X   |
+|  0100       |     X      |       |                   |               |             |       |
+|  0220       |     X      |       |         X         |               |             |       |
+|  0210       |            |   X   |         X         |               |             |       |
+|  0107       |            |       |                   |       X       |      X      |       |
+|  0820       |            |       |                   |       X       |      X      |       |
+|  0830       |            |       |                   |       X       |      X      |       |
 
 The following things are also supported even thought they are not standardized in Zigbee Light Link:
 
@@ -49,7 +47,7 @@ The following things are also supported even thought they are not standardized i
 The following matrix lists the capabilities (channels) for each of the supported non-lighting device types:
 
 | Thing type  | Battery Level | Battery Low | Position | Fan Mode | Lock physical buttons | LED's on/off | Air Quality | Current Fan Speed | Filter status |
-|-------------|:-------------:|:-----------:|:---------|:---------|:----------------------|:-------------|:------------|:------------------|:--------------|
+|-------------|:-------------:|:-----------:|:--------:|:--------:|:---------------------:|:------------:|:-----------:|:-----------------:|:-------------:|
 |  0202       |       X       |      X      |     X    |          |                       |              |             |                   |               |
 |  0203       |       X       |      X      |          |          |                       |              |             |                   |               |
 |  0007       |               |             |          |    X     |          X            |      X       |      X      |         X         |       X       |
