@@ -18,7 +18,10 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.binding.tradfri.internal.TradfriColor;
 import org.openhab.core.library.types.HSBType;
+import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.library.types.PercentType;
+import org.openhab.core.types.State;
+import org.openhab.core.types.UnDefType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +34,7 @@ import com.google.gson.JsonPrimitive;
  * @author Kai Kreuzer - Initial contribution
  * @author Holger Reichert - Support for color bulbs
  * @author Christoph Weitkamp - Restructuring and refactoring of the binding
+ * @author Vivien Boistuaud - Added support for switch channel
  */
 @NonNullByDefault
 public class TradfriLightData extends TradfriDeviceData {
@@ -129,6 +133,15 @@ public class TradfriLightData extends TradfriDeviceData {
             return onOff.getAsInt() == 1;
         } else {
             return false;
+        }
+    }
+
+    public State getOnOffAsState() {
+        JsonElement onOff = attributes.get(ONOFF);
+        if (onOff != null) {
+            return OnOffType.from(onOff.getAsInt() == 1);
+        } else {
+            return UnDefType.UNDEF;
         }
     }
 

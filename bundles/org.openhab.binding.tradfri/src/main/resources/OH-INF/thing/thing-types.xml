@@ -41,6 +41,7 @@
 		<description>A light that has continuous brightness control.</description>
 
 		<channels>
+			<channel id="switch" typeId="system.power"/>
 			<channel id="brightness" typeId="system.brightness"/>
 		</channels>
 
@@ -58,6 +59,7 @@
 		<description>A dimmable light that supports different color temperature settings.</description>
 
 		<channels>
+			<channel id="switch" typeId="system.power"/>
 			<channel id="brightness" typeId="system.brightness"/>
 			<channel id="color_temperature" typeId="system.color-temperature"/>
 		</channels>
@@ -76,6 +78,7 @@
 		<description>A dimmable light that supports full colors and color temperature settings.</description>
 
 		<channels>
+			<channel id="switch" typeId="system.power"/>
 			<channel id="color_temperature" typeId="system.color-temperature"/>
 			<channel id="color" typeId="system.color"/>
 		</channels>

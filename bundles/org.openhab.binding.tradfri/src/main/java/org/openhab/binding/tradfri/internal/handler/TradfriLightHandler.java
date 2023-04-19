@@ -27,6 +27,7 @@ import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
 import org.openhab.core.types.Command;
 import org.openhab.core.types.RefreshType;
+import org.openhab.core.types.State;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ import com.google.gson.JsonElement;
  * @author Kai Kreuzer - Initial contribution
  * @author Holger Reichert - Support for color bulbs
  * @author Christoph Weitkamp - Restructuring and refactoring of the binding
+ * @author Vivien Boistuaud - Added support for switch channel
  */
 @NonNullByDefault
 public class TradfriLightHandler extends TradfriThingHandler {
@@ -73,6 +75,11 @@ public class TradfriLightHandler extends TradfriThingHandler {
             PercentType dimmer = state.getBrightness();
             if (dimmer != null && !lightHasColorSupport()) { // color lights do not have brightness channel
                 updateState(CHANNEL_BRIGHTNESS, dimmer);
+            }
+
+            State switchOn = state.getOnOffAsState();
+            if (switchOn != null) {
+                updateState(CHANNEL_SWITCH, switchOn);
             }
 
             PercentType colorTemp = state.getColorTemperature();
@@ -141,6 +148,9 @@ public class TradfriLightHandler extends TradfriThingHandler {
                 case CHANNEL_BRIGHTNESS:
                     handleBrightnessCommand(command);
                     break;
+                case CHANNEL_SWITCH:
+                    handleSwitchOnOffCommand(command);
+                    break;
                 case CHANNEL_COLOR_TEMPERATURE:
                     handleColorTemperatureCommand(command);
                     break;
@@ -173,6 +183,15 @@ public class TradfriLightHandler extends TradfriThingHandler {
             }
         } else {
             logger.debug("Cannot handle command {} for channel {}", command, CHANNEL_BRIGHTNESS);
+        }
+    }
+
+    private void handleSwitchOnOffCommand(Command command) {
+        if (command instanceof OnOffType) {
+            setState((OnOffType) command);
+        } else {
+            logger.debug("Can't handle command {} of type {} on channel {}", command, command.getClass(),
+                    CHANNEL_COLOR_TEMPERATURE);
         }
     }
 

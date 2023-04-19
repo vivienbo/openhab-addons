@@ -28,6 +28,7 @@ import org.openhab.core.thing.ThingTypeUID;
  * @author Christoph Weitkamp - Added support for remote controller and motion sensor devices (read-only battery level)
  * @author Manuel Raffel - Added support for blinds
  * @author Vivien Boistuaud - Added support for air purifier
+ * @author Vivien Boistuaud - Added support for switch channel
  */
 @NonNullByDefault
 public class TradfriBindingConstants {
@@ -85,6 +86,7 @@ public class TradfriBindingConstants {
 
     // List of all Channel IDs
     public static final String CHANNEL_POWER = "power";
+    public static final String CHANNEL_SWITCH = "switch";
     public static final String CHANNEL_BRIGHTNESS = "brightness";
     public static final String CHANNEL_COLOR_TEMPERATURE = "color_temperature";
     public static final String CHANNEL_COLOR = "color";
