@@ -26,15 +26,15 @@ These are:
 
 The following matrix lists the capabilities (channels) for each of the supported lighting device types:
 
-| Thing type  | Brightness | Color | Color Temperature | Battery Level | Battery Low | Power |
-|-------------|:----------:|:-----:|:-----------------:|:-------------:|:-----------:|:-----:|
-|  0010       |            |       |                   |               |             |   X   |
-|  0100       |     X      |       |                   |               |             |       |
-|  0220       |     X      |       |         X         |               |             |       |
-|  0210       |            |   X   |         X         |               |             |       |
-|  0107       |            |       |                   |       X       |      X      |       |
-|  0820       |            |       |                   |       X       |      X      |       |
-|  0830       |            |       |                   |       X       |      X      |       |
+| Thing type  | Switch | Brightness | Color | Color Temperature | Battery Level | Battery Low | Power |
+|-------------|:------:|:----------:|:-----:|:-----------------:|:-------------:|:-----------:|:-----:|
+|  0010       |        |            |       |                   |               |             |   X   |
+|  0100       |   X    |     X      |       |                   |               |             |       |
+|  0220       |   X    |     X      |       |         X         |               |             |       |
+|  0210       |   X    |            |   X   |         X         |               |             |       |
+|  0107       |        |            |       |                   |       X       |      X      |       |
+|  0820       |        |            |       |                   |       X       |      X      |       |
+|  0830       |        |            |       |                   |       X       |      X      |       |
 
 The following things are also supported even thought they are not standardized in Zigbee Light Link:
 
@@ -65,6 +65,8 @@ On each initialization if the code is present in the thing configuration - the `
 The devices require only a single (integer) parameter, which is their instance id. Unfortunately, this is not displayed anywhere in the IKEA app, but it seems that they are sequentially numbered starting with 65537 for the first device. If in doubt, use the auto-discovered things to find out the correct instance ids.
 
 ## Channels
+
+All bulbs support the `switch` channel to switch the light ON or OFF.
 
 The dimmable bulbs support the `brightness` channel.
 The white spectrum bulbs additionally also support the `color_temperature` channel.
@@ -126,9 +128,12 @@ demo.items:
 
 ```java
 Dimmer Light1 { channel="tradfri:0100:mygateway:myDimmableBulb:brightness" }
+Switch Light1_Switch { channel="tradfri:0100:mygateway:myDimmableBulb:switch" }
 Dimmer Light2_Brightness { channel="tradfri:0220:mygateway:myColorTempBulb:brightness" }
 Dimmer Light2_ColorTemperature { channel="tradfri:0220:mygateway:myColorTempBulb:color_temperature" }
+Switch Light2_Switch { channel="tradfri:0220:mygateway:myColorTempBulb:switch" }
 Color ColorLight { channel="tradfri:0210:mygateway:myColorBulb:color" }
+Switch ColorLight_Switch { channel="tradfri:0210:mygateway:myColorBulb:switch" }
 Number RemoteControlBatteryLevel { channel="tradfri:0830:mygateway:myRemoteControl:battery_level" }
 Switch RemoteControlBatteryLow { channel="tradfri:0830:mygateway:myRemoteControl:battery_low" }
 Switch ControlOutlet { channel="tradfri:0010:mygateway:myControlOutlet:power" }
@@ -151,9 +156,12 @@ sitemap demo label="Main Menu"
 {
     Frame {
         Slider item=Light1 label="Light1 Brightness [%.1f %%]"
+        Switch item=Light1_Switch label="Light1 switch"
         Slider item=Light2_Brightness label="Light2 Brightness [%.1f %%]"
         Slider item=Light2_ColorTemperature label="Light2 Color Temperature [%.1f %%]"
+        Switch item=Light2_Switch label="Light2 switch"
         Colorpicker item=ColorLight label="Color"
+        Switch item=ColorLight_Switch label="ColorLight switch"
         Text item=RemoteControlBatteryLevel label="Battery Level [%d %%]"
         Switch item=RemoteControlBatteryLow label="Battery Low Warning"
         Switch item=ControlOutlet label="Power Switch"
