@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.library.types.HSBType;
 import org.openhab.core.library.types.PercentType;
+import org.openhab.core.util.ColorUtil;
 
 /**
  * The {@link TradfriColor} is used for conversion between color formats.
@@ -87,7 +88,8 @@ public class TradfriColor {
         float x = unnormalize(xyX);
         float y = unnormalize(xyY);
 
-        HSBType converted = HSBType.fromXY(x, y);
+        double[] xy = { x, y };
+        HSBType converted = ColorUtil.xyToHsb(xy);
 
         final Integer brightness = this.brightness;
         if (brightness == null) {
