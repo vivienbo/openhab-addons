@@ -31,6 +31,7 @@ import org.openhab.binding.tradfri.internal.handler.TradfriGatewayHandler;
 import org.openhab.core.config.discovery.AbstractDiscoveryService;
 import org.openhab.core.config.discovery.DiscoveryResult;
 import org.openhab.core.config.discovery.DiscoveryResultBuilder;
+import org.openhab.core.config.discovery.DiscoveryService;
 import org.openhab.core.thing.ThingTypeUID;
 import org.openhab.core.thing.ThingUID;
 import org.openhab.core.thing.binding.ThingHandler;
@@ -52,7 +53,7 @@ import com.google.gson.JsonSyntaxException;
  */
 @NonNullByDefault
 public class TradfriDiscoveryService extends AbstractDiscoveryService
-        implements DeviceUpdateListener, ThingHandlerService {
+        implements DeviceUpdateListener, DiscoveryService, ThingHandlerService {
     private final Logger logger = LoggerFactory.getLogger(TradfriDiscoveryService.class);
 
     private @Nullable TradfriGatewayHandler handler;
